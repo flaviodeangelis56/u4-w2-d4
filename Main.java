@@ -3,6 +3,7 @@ import org.w3c.dom.ls.LSOutput;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 public class Main {
     public static void main(String[] args) {
@@ -97,8 +98,9 @@ public class Main {
         List<Product> prodottiOrdinatiDalPiùCostoso = productList.stream().sorted(Comparator.comparing(Product::getPrice, Comparator.reverseOrder())).toList();
         prodottiOrdinatiDalPiùCostoso.forEach(product -> System.out.println(product));
         System.out.println("-------------------EXERCISE 4-------------------");
-        orderList.stream().collect(Collectors.groupingBy(order -> order.getId(), Collectors.summingDouble(order.))).forEach((k,v) -> System.out.println(k + "" + v));
-
+        //orderList.stream().collect(Collectors.groupingBy(order -> order.getId())).forEach((k,v) -> {});
+double sum = orderList.stream().mapToDouble(order -> order.getProducts().stream().mapToDouble(product -> product.getPrice()).sum()).average().orElse(0.0);
+        System.out.println("media dei prezzi dei prodotti di tutti gli ordini : " + sum);
         System.out.println("-------------------EXERCISE 5-------------------");
        Map<String , Double> productPriceSum= productList.stream().collect(Collectors.groupingBy(Product::getCategory, Collectors.summingDouble(Product::getPrice)));
         productPriceSum.forEach((category, priceSum ) -> System.out.println(category + ": " + priceSum));
