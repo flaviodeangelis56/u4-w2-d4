@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,6 +86,13 @@ public class Main {
         System.out.println("-------------------EXERCISE 1-------------------");
         orderList.stream().collect(Collectors.groupingBy(order -> order.getCustomers().getName())).forEach((k,v) -> System.out.println( k + ", Order: " + v ));
         System.out.println("-------------------EXERCISE 2-------------------");
+        orderList.stream().collect(Collectors.groupingBy(order -> order.getCustomers().getName())).forEach((k,v) -> {
+int finalPrice = 0;
+            //v.forEach(order -> order.getProducts().forEach(product -> finalPrice + product.getPrice()));
+        });
+        System.out.println("-------------------EXERCISE 3-------------------");
+        List<Product> prodottiOrdinatiDalPiùCostoso = productList.stream().sorted(Comparator.comparing(Product::getPrice, Comparator.reverseOrder())).toList();
+        prodottiOrdinatiDalPiùCostoso.forEach(product -> System.out.println(product));
     }
 
 
