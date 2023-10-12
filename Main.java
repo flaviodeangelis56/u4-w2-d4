@@ -1,8 +1,7 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -84,15 +83,21 @@ public class Main {
         orderListCustomersTier2.stream().filter(order -> order.getOrderDate().isAfter(onefeb)).filter(order -> order.getOrderDate().isBefore(oneApr)).forEach(order -> System.out.println(order.getProducts().toString()));
         System.out.println("-------------------U4-W2-D4-------------------");
         System.out.println("-------------------EXERCISE 1-------------------");
-        orderList.stream().collect(Collectors.groupingBy(order -> order.getCustomers().getName())).forEach((k,v) -> System.out.println( k + ", Order: " + v ));
+       orderList.stream().collect(Collectors.groupingBy(order -> order.getCustomers())).forEach((k, v) -> System.out.println( k + ", Order: " + v ));
         System.out.println("-------------------EXERCISE 2-------------------");
-        orderList.stream().collect(Collectors.groupingBy(order -> order.getCustomers().getName())).forEach((k,v) -> {
-int finalPrice = 0;
-            //v.forEach(order -> order.getProducts().forEach(product -> finalPrice + product.getPrice()));
+        orderList.stream().collect(Collectors.groupingBy(order -> order.getCustomers())).forEach((k,orders) -> {
+            double finalPrice = 0;
+            for(Order order : orders)  {
+               double partialSum = order.getProducts().stream().mapToDouble(Product::getPrice).sum();
+                finalPrice += partialSum;
+            };
+        System.out.println(k + ", somma prezzi ordini : " + finalPrice);
         });
         System.out.println("-------------------EXERCISE 3-------------------");
         List<Product> prodottiOrdinatiDalPiùCostoso = productList.stream().sorted(Comparator.comparing(Product::getPrice, Comparator.reverseOrder())).toList();
         prodottiOrdinatiDalPiùCostoso.forEach(product -> System.out.println(product));
+        System.out.println("-------------------EXERCISE 4-------------------");
+        orderList.stream().collect(Collectors.averagingDouble());
     }
 
 
