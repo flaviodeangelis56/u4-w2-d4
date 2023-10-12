@@ -97,7 +97,11 @@ public class Main {
         List<Product> prodottiOrdinatiDalPiùCostoso = productList.stream().sorted(Comparator.comparing(Product::getPrice, Comparator.reverseOrder())).toList();
         prodottiOrdinatiDalPiùCostoso.forEach(product -> System.out.println(product));
         System.out.println("-------------------EXERCISE 4-------------------");
-        orderList.stream().collect(Collectors.averagingDouble());
+        orderList.stream().collect(Collectors.groupingBy(order -> order.getId(), Collectors.summingDouble(order.))).forEach((k,v) -> System.out.println(k + "" + v));
+
+        System.out.println("-------------------EXERCISE 5-------------------");
+       Map<String , Double> productPriceSum= productList.stream().collect(Collectors.groupingBy(Product::getCategory, Collectors.summingDouble(Product::getPrice)));
+        productPriceSum.forEach((category, priceSum ) -> System.out.println(category + ": " + priceSum));
     }
 
 
